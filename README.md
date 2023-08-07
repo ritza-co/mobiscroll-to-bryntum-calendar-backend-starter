@@ -54,29 +54,27 @@ USE mobiscroll;
 Let’s create the event table that we’ll need for our Mobiscroll Calendar data:
 
 ```sql
-create TABLE `bryntum_calendar_events` (
-  `id`                      int           NOT NULL AUTO_INCREMENT,
-  `name`                    varchar(255)  NOT NULL,
-  `readOnly`                boolean       DEFAULT FALSE,
-  `resourceId`              int           DEFAULT NULL,
-  `timeZone`                varchar(255)  DEFAULT NULL,
-  `draggable`               boolean       DEFAULT TRUE,
-  `resizable`               varchar(255)  DEFAULT null,
-  `children`                varchar(255)  DEFAULT null,
-  `allDay`                  boolean       DEFAULT FALSE,
-  `duration`                float(11, 2)  unsigned DEFAULT NULL,
-  `durationUnit`            varchar(255)  DEFAULT 'day',
-  `startDate`               datetime      DEFAULT NULL, 
-  `endDate`                 datetime      DEFAULT NULL,
-  `exceptionDates`          json          DEFAULT null,
-  `recurrenceRule`          varchar(255)  DEFAULT null,
-  `cls`                     varchar(255)  DEFAULT null,
-  `eventColor`              varchar(255)  DEFAULT null,
-  `eventStyle`              varchar(255)  DEFAULT null,
-  `iconCls`                 varchar(255)  DEFAULT null,
-  `style`                   varchar(255)  DEFAULT null,
-  PRIMARY KEY (`id`)
-) ENGINE=INNODB AUTO_INCREMENT=1;
+CREATE TABLE `events`
+(
+    `id`                    int(11)       NOT NULL AUTO_INCREMENT,
+    `title`                 varchar(255)  NOT NULL,
+    `tooltip`               varchar(255)  DEFAULT NULL,
+    `color`                 varchar(7)    DEFAULT NULL,
+    `start`                 datetime      NOT NULL,
+    `end`                   datetime      NOT NULL,
+    `allDay`                boolean       DEFAULT FALSE,
+    `recurring`             json          DEFAULT NULL,
+    `recurringException`    json          DEFAULT NULL,
+    `recurringExceptionRule` json         DEFAULT NULL,
+    `resource`              int(11)       DEFAULT NULL,
+    `timezone`              varchar(255)  DEFAULT NULL,
+    `dragBetweenResources`  boolean       DEFAULT TRUE,
+    `dragInTime`            boolean       DEFAULT TRUE,
+    `resize`                boolean       DEFAULT TRUE,
+    `editable`              boolean       DEFAULT TRUE,
+    `cssClass`              varchar(255)  DEFAULT NULL,
+    PRIMARY KEY (`id`)
+);
 ```
 
 The fields with a type of `json` are fields that may be objects. MySQL does not have an object field type so we’ll use the `json` type instead. The data for these fields will need to be stringified before it's inserted into the database and parsed when it's retrieved from the database.
